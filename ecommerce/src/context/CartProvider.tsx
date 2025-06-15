@@ -16,7 +16,7 @@ interface CartProviderProps {
 export function CartProvider({ children }: CartProviderProps) {
     const [items, setItems] = useState<CartItem[]>([]);
 
-    const addItem = (product: { id: number; }) => {
+    const addItem = (product: { id: number }) => {
         setItems((currentItems) => {
             const existingItem = currentItems.find((item) => item.id === product.id);
             if (existingItem) {
