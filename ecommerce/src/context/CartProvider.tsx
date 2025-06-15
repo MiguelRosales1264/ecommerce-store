@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CartContext } from "./CartContext";
 
-type CartItem = { id: string; quantity: number };
+type CartItem = { id: number; quantity: number };
 
 interface CartProviderProps {
     children: React.ReactNode;
@@ -10,7 +10,7 @@ interface CartProviderProps {
 export function CartProvider({ children }: CartProviderProps) {
     const [items, setItems] = useState<CartItem[]>([]);
 
-    const addItem = (product: { id: string; }) => {
+    const addItem = (product: { id: number; }) => {
         setItems((currentItems) => {
             const existingItem = currentItems.find((item) => item.id === product.id);
             if (existingItem) {
@@ -22,11 +22,28 @@ export function CartProvider({ children }: CartProviderProps) {
             }
 
             return [...currentItems, {...product, quantity: 1 }];
-        })
+        });
+    };
+
+    const removeItem = (productId: number) => {
+        setItems((currentItems) => 
+            currentItems.filter((item) => item.id !== productId)
+        );
+    };
+
+    const updateQuantity = (productId: number, quantity: number) => {
+        setItems((currentItems) => 
+            currentItems.map((item) => 
+                item.id === productId 
+                    ? { ...item, quantity: Math.max(0, quantity) } 
+                    : item
+            )
+            .filter((item) => item.quantity > 0)
+        );
     }
 
     return (
-        <CartContext.Provider value={{ items, addItem }}>
+        <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity }}>
             {children}
         </CartContext.Provider>
     );

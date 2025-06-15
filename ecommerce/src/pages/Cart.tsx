@@ -4,12 +4,11 @@ import { Link } from "react-router";
 
 type CartItem = {
     title: string,
-    id: string,
+    id: number,
     quantity: number,
     image: string,
     price: number,
 };
-
 
 export default function Cart() {
     const { items } = use(CartContext);
