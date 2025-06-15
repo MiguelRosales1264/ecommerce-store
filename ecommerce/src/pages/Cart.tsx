@@ -1,7 +1,48 @@
+import { use } from "react";
+import { CartContext } from "../context/CartContext";
+import { Link } from "react-router";
+
+type CartItem = {
+    title: string,
+    id: string,
+    quantity: number,
+    image: string,
+    price: number,
+};
+
+
 export default function Cart() {
+    const { items } = use(CartContext);
+
     return (
-        <div className="container mx-auto px-4 py-8">
-            Cart compoenent
+        <div className="p-8 max-w-4xl mx-auto">
+            <h1 className="text-2xl font-bold mb-6">Shopping Cart</h1>
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+                <div className="divide-y divide-gray-200">
+                    { items.map((item: CartItem) => (
+                        <div key={item.id} className="p-6 flex items-center gap-6">
+                            <img
+                                src={item.image} 
+                                alt={item.title} 
+                                className="w-24 h-24 object-contain" 
+                            />
+                            <div className="flex-1">
+                                <h3 className="text-lg font-semibold">{item.title}</h3>
+                                <p className="text-grey-600">${item.price}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                    <div className="p-6 bg-gray-50">
+                        <div className="flex justify-end">
+                        <Link to='/checkout'
+                            className='bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors'
+                        >
+                            Proceed to checkout
+                        </Link>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
