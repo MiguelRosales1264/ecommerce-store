@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CartContext } from "./CartContext";
 
 type CartItem = { 
@@ -14,7 +14,14 @@ interface CartProviderProps {
 }
 
 export function CartProvider({ children }: CartProviderProps) {
-    const [items, setItems] = useState<CartItem[]>([]);
+    const [items, setItems] = useState<CartItem[]>(() => {
+        const savedCart = localStorage.getItem('cart');
+        return savedCart ? JSON.parse(savedCart) : [];
+    });
+    
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(items))
+    }, [ items ])
 
     const addItem = (product: { id: number }) => {
         setItems((currentItems) => {
