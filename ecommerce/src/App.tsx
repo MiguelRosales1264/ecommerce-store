@@ -8,6 +8,7 @@ import Checkout from './pages/Checkout';
 import Product from './pages/Product';
 import NotFound from './pages/NotFound';
 import { CartProvider } from './context/CartProvider';
+import Cart from './pages/Cart';
 
 const queryCleint = new QueryClient();
 
@@ -32,6 +33,7 @@ function App() {
           <Route element={<Layout />}>
             <Route index element={<Products />}/>
             <Route path='/products/:id' element={<Product />} />
+            <Route path='/cart' element={<Cart />} />
             <Route path='/checkout' element={<Checkout />} />
             <Route path='*' element={<NotFound />}/>
           </Route>
