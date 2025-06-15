@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { CartContext } from "./CartContext";
 
-type CartItem = { id: number; quantity: number };
+type CartItem = { 
+    id: number; 
+    quantity: number,
+    title: string,
+    image: string,
+    price: number,
+};
 
 interface CartProviderProps {
     children: React.ReactNode;
@@ -10,7 +16,7 @@ interface CartProviderProps {
 export function CartProvider({ children }: CartProviderProps) {
     const [items, setItems] = useState<CartItem[]>([]);
 
-    const addItem = (product: { id: number; }) => {
+    const addItem = (product: { id: number }) => {
         setItems((currentItems) => {
             const existingItem = currentItems.find((item) => item.id === product.id);
             if (existingItem) {
@@ -42,8 +48,27 @@ export function CartProvider({ children }: CartProviderProps) {
         );
     }
 
+    let cartCount = 0;
+    for (const item of items) {
+        cartCount += item.quantity;
+    }
+
+    let cartTotal = 0;
+    for (const item of items) {
+        const itemTotal = item.price * item.quantity;
+        cartTotal += itemTotal;
+    }
+
     return (
-        <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity }}>
+        <CartContext.Provider 
+            value={{ 
+                items, 
+                addItem, 
+                removeItem, 
+                updateQuantity, 
+                cartCount, 
+                cartTotal,
+            }}>
             {children}
         </CartContext.Provider>
     );
