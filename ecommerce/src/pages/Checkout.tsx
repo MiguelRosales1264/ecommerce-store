@@ -1,5 +1,6 @@
 import { use } from "react";
 import { CartContext } from "../context/CartContext"
+import CartSummary from "../components/CartSummary";
 
 export default function Checkout() {
     const { items, cartTotal } = use(CartContext);
@@ -22,7 +23,7 @@ export default function Checkout() {
         <div className="p-8 max-w-4xl mx-auto">
             <h1 className="text-2xl font-bold mb-6">Checkout</h1>
             <div className="grid md:grid-cols-2 gap-8">
-                <CheckoutForm onSubmit={handleCheckout} />
+                {/* <CheckoutForm onSubmit={handleCheckout} /> */}
                 <CartSummary items={items} cartTotal={cartTotal} />
             </div>
         </div>
