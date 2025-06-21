@@ -24,7 +24,10 @@ export default function Checkout() {
             const orderData = {
                 userId: 1,
                 date: new Date().toISOString(),
-                products: items,
+                products: items.map(item => ({
+                    id: String(item.id),
+                    quantity: item.quantity,
+                })),
                 customer: {
                     name: formData.get('name'),
                     email: formData.get('email'),

@@ -1,10 +1,4 @@
-
-type CartItem = {
-    id: number;
-    title: string;
-    price: number;
-    quantity: number;
-};
+import type { CartItem } from "../context/CartContext";
 
 interface CartSummaryProps {
     items: CartItem[];
