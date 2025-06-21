@@ -1,5 +1,6 @@
 import { httpClient } from "./httpClient";
 import { HttpService } from "./HttpService";
+import type { OrderData } from "../hooks/useCheckout";
 
 export interface Product {
     id: string;
@@ -36,6 +37,15 @@ class ProductsService extends HttpService {
     
     async getProduct(id: string) {
         return this.get(`/products/${id}`);
+    }
+
+    async createOrder(orderData: OrderData) {
+        // return this.post('/carts', orderData);
+        
+        /* The line `return this.post('/carts', orderData as unknown as JSON);` is attempting to cast
+        the `orderData` object to type `JSON` before sending it as a POST request to the '/carts'
+        endpoint. */
+        return this.post('/carts', orderData as unknown as JSON);
     }
 }
 

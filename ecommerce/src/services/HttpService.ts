@@ -8,9 +8,17 @@ export class HttpService {
 
     async get(url: string, config = {}) {
         try {
-            const { data } = await this.client.get(
-                url, config
-            );
+            const { data } = await this.client.get(url, config);
+            return data; 
+        } catch (error) {
+            console.error("Error fetching products: ", error);
+            throw error;
+        }
+    }
+
+    async post(url: string, body: JSON, config = {}) {
+        try {
+            const { data } = await this.client.post(url, body, config);
             return data; 
         } catch (error) {
             console.error("Error fetching products: ", error);
