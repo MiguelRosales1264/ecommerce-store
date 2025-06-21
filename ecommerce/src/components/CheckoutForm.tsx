@@ -1,10 +1,14 @@
+import { useFormStatus } from "react-dom";
+
 interface CheckoutFormProps {
-    onSubmit: (body: JSON) => void;
+    onSubmit: () => void;
 }
 
 export default function ChekcoutForm({ onSubmit }: CheckoutFormProps) {
+    const { pending } = useFormStatus();
+
     return (
-        <form className='space-y-4'>
+        <form action={onSubmit} className='space-y-4'>
             <div>
                 <label 
                     htmlFor="name" 
@@ -89,8 +93,12 @@ export default function ChekcoutForm({ onSubmit }: CheckoutFormProps) {
                 </div>
             </div>
 
-            <button type="submit" className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300">
-                Place Order
+            <button 
+                type="submit" 
+                className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 disabled:bg-blue-400"
+                disabled={pending}
+            >
+                {pending ? "Processing order..." : "Place Order"}
             </button>
         </form>
     );
