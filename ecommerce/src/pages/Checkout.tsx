@@ -2,9 +2,11 @@ import { use } from "react";
 import { CartContext } from "../context/CartContext"
 import CartSummary from "../components/CartSummary";
 import CheckoutForm from "../components/CheckoutForm";
+import { useCheckout } from "../hooks/useCheckout";
 
 export default function Checkout() {
     const { items, cartTotal } = use(CartContext);
+    const { mutateAsync: submitCheckout } = useCheckout();
 
     if (items.length === 0) {
         return (
@@ -17,19 +19,25 @@ export default function Checkout() {
         );
     }
 
-    function handleCheckout(formData: FormData) {
-        const orderData = {
-            userId: 1,
-            date: new Date().toISOString(),
-            products: items,
-            customer: {
-                name: formData.get('name'),
-                email: formData.get('email'),
-                address: formData.get('address'),
-                city: formData.get('city'),
-                zipCode: formData.get('zipCode'),
-            },
-        };
+    async function handleCheckout(formData: FormData) {
+        try {
+            const orderData = {
+                userId: 1,
+                date: new Date().toISOString(),
+                products: items,
+                customer: {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    address: formData.get('address'),
+                    city: formData.get('city'),
+                    zipCode: formData.get('zipCode'),
+                },
+            };
+            await submitCheckout(orderData);
+        } catch (error) {
+            console.error(`Checkout failed: ${error}`);
+            alert("There was an error processing your order. Please try again.");
+        }
     }
 
     return (
