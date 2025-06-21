@@ -1,7 +1,7 @@
 import { useFormStatus } from "react-dom";
 
 interface CheckoutFormProps {
-    onSubmit: () => void;
+    onSubmit: (formData: FormData) => void;
 }
 
 export default function ChekcoutForm({ onSubmit }: CheckoutFormProps) {

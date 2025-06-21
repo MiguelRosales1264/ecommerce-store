@@ -17,8 +17,20 @@ export default function Checkout() {
         );
     }
 
-    function handleCheckout() {}
-
+    function handleCheckout(formData: FormData) {
+        const orderData = {
+            userId: 1,
+            date: new Date().toISOString(),
+            products: items,
+            customer: {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                address: formData.get('address'),
+                city: formData.get('city'),
+                zipCode: formData.get('zipCode'),
+            },
+        };
+    }
 
     return (
         <div className="p-8 max-w-4xl mx-auto">
