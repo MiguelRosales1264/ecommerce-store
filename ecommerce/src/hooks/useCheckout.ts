@@ -6,11 +6,11 @@ export interface OrderData {
     date: string;
     products: { id: string; quantity: number }[];
     customer: {
-        name: string;
-        email: string;
-        address: string;
-        city?: string;
-        zipCode?: string;
+        name: FormDataEntryValue | null;
+        email: FormDataEntryValue | null;
+        address: FormDataEntryValue | null;
+        city?: FormDataEntryValue | null;
+        zipCode?: FormDataEntryValue | null;
     };
 }
 
